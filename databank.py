@@ -13,6 +13,10 @@ class Bank:
         self.cursor.execute('CREATE TABLE IF NOT EXISTS( id_comb int(10) PRIMARY KEY NOT NULL AUTO_INCREMENT, name_comb'
                             'varchar(255) not null, qt_comb decimal(10,2) not null, price decimal(10,2) not null)')
 
+    def create_table_client(self):
+        self.cursor.execute('CREATE TABLE IF NOT EXISTS(cpf varchar(11) PRIMARY KEY NOT NULL, name varchar(255)'
+                            ' not null, phone varchar(9) not null)')
+
     def insert_comb(self, name_comb, qt_comb, price):
         try:
             self.cursor.execute('INSERT INTO tank (name_comb, qt_comb, price) VALUES (%s, %s, %s)',
@@ -62,6 +66,19 @@ class Bank:
         else:
             self.con.commit()
             return price_comb[0]
+
+    def name_comb(self, id_comb):
+        name_comb = []
+        # Consulting the name of the fuel by ID.
+        try:
+            self.cursor.execute('SELECT name_comb from tank where id_comb = %s', (id_comb,))
+            for i in self.cursor.fetchall():
+                name_comb.append(i[0])
+        except Exception as error_select_name_comb:
+            print('Error in select name!')
+            print(error_select_name_comb)
+        else:
+            return name_comb[0]
 
     def to_fuel(self, id_comb, to_fuel):
         self.amount_comb(id_comb)
