@@ -5,6 +5,7 @@ class Client:
 
     def __init__(self):
         self.bank = Bank()
+        self.client_data = []
 
     def client_register(self, cpf, name, phone):
         try:
@@ -17,7 +18,7 @@ class Client:
             print('Client registered!')
             self.bank.con.close()
 
-    def select_client(self, cpf):
+    def select_client_name(self, cpf):
         client_name = []
         try:
             self.bank.cursor.execute('SELECT name from client where cpf = %s', cpf)
@@ -27,7 +28,7 @@ class Client:
             print('Select issues!')
             print(error_select_name)
         else:
-            print(f'Welcome {client_name[0]}!')
+            return client_name[0]
 
     def update_phone_client(self, cpf, phone):
         try:
@@ -50,4 +51,3 @@ class Client:
             self.bank.con.commit()
             print('Client deleted successfully!')
             self.bank.con.close()
-

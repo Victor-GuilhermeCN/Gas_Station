@@ -6,10 +6,7 @@ from decimal import Decimal
 
 class FuelPump:
 
-    def __init__(self, id_comb, liter_value, qt_comb):
-        self.id_comb = id_comb
-        self.liter_value = liter_value
-        self.qt_comb = qt_comb
+    def __init__(self):
         self.nf = Nf()
         self.fidelity = Fidelity()
         self.comb = Bank()
@@ -72,5 +69,4 @@ class FuelPump:
                     print(error_byliter_n_cpf)
                 else:
                     print(f'Refilled: ${amount_price:.2f}\n'
-                            f'Total liters: {qt_comb}')
-
+                          f'Total liters: {qt_comb}')
