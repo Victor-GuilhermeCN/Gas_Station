@@ -17,6 +17,11 @@ class Bank:
         self.cursor.execute('CREATE TABLE IF NOT EXISTS(cpf varchar(11) PRIMARY KEY NOT NULL, name varchar(255)'
                             ' not null, phone varchar(9) not null)')
 
+    def create_table_nf(self):
+        self.cursor.execute('CREATE TABLE IF NOT EXISTS(id_nf int(10) PRIMARY KEY AUTO_INCREMENT NOT NULL, cpf '
+                            'varchar(11), nf_value decimal(10,2) not null, nf_item varchar(255) not null, nf_amount '
+                            'decimal(10,2) not null, date_nf date, nf_hour time)')
+
     def insert_comb(self, name_comb, qt_comb, price):
         try:
             self.cursor.execute('INSERT INTO tank (name_comb, qt_comb, price) VALUES (%s, %s, %s)',

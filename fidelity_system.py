@@ -8,6 +8,7 @@ class Fidelity:
         self.bank = Bank()
         self.client = Client()
 
+    # Adding loyalty points
     def get_points(self, cpf):
         value_nf = []
         try:
@@ -23,6 +24,7 @@ class Fidelity:
             self.bank.con.commit()
             self.bank.con.close()
 
+    # Querying total customer loyalty points
     def consulting_points(self, cpf):
         amount_points = []
         client_name = self.client.select_client_name(cpf)

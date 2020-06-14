@@ -7,12 +7,12 @@ class Client:
         self.bank = Bank()
         self.client_data = []
 
+    # Register client
     def client_register(self, cpf, name, phone):
         try:
             self.bank.cursor.execute('INSERT INTO client (cpf, name, phone) VALUES (%s, %s, %s)', (cpf, name, phone))
-        except Exception as error_insert_client:
-            print('Insert Issues!')
-            print(error_insert_client)
+        except Exception:
+            return False
         else:
             self.bank.con.commit()
             print('Client registered!')

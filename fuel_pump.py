@@ -17,9 +17,31 @@ class FuelPump:
         if amount_liter > self.comb.amount_comb(id_comb):
             print('Not fuel enough!')
         else:
-            opt = input('Want the CPF in the note? [Y/N]: ').upper().strip()[0]
+            def get_opt():
+                try:
+                    option = input('Want the CPF in the note? [Y/N]: ').upper().strip()[0]
+                    if option not in 'YN':
+                        print('Only YN')
+                        return get_opt()
+                except:
+                    print('Only Y/N')
+                    return get_opt(), False
+                else:
+                    return option
+            opt = get_opt()
             if opt == 'Y':
-                cpf = int(input('CPF: '))
+                def get_cpf():
+                    try:
+                        cpf_guy = int(input('CPF: '))
+                        if len(str(cpf_guy)) > 11 or len(str(cpf_guy)) < 11:
+                            print('Only 11 numbers!')
+                            return get_cpf()
+                    except:
+                        print('Only numbers!')
+                        return get_cpf()
+                    else:
+                        return cpf_guy
+                cpf = get_cpf()
                 try:
                     self.comb.to_fuel(id_comb, (self.comb.amount_comb(id_comb) - amount_liter))
                     self.nf.generates_nf_with_cpf(str(cpf), value, name_comb, amount_liter)
@@ -43,16 +65,38 @@ class FuelPump:
 
     def byliter(self, id_comb, qt_comb):
         name_comb = self.comb.name_comb(id_comb)
-        amount_price = round(qt_comb * self.comb.price_comb(id_comb))
+        amount_price = round(Decimal(qt_comb) * Decimal(self.comb.price_comb(id_comb)))
         if qt_comb > self.comb.amount_comb(id_comb):
             print("No fuel enough!")
         else:
-            opt = input('Want the CPF in the note? [Y/N]').upper().strip()[0]
-            if opt == 'Y':
-                cpf = input('CPF: ')
+            def get_opt():
                 try:
-                    self.comb.to_fuel(id_comb, (self.comb.amount_comb(id_comb) - qt_comb))
-                    self.nf.generates_nf_with_cpf(str(cpf), amount_price, name_comb, qt_comb)
+                    option = input('Want the CPF in the note? [Y/N]: ').upper().strip()[0]
+                    if option not in 'YN':
+                        print('Only Y/N')
+                        return get_opt()
+                except:
+                    print('Only Y/N')
+                    return get_opt()
+                else:
+                    return option
+            opt = get_opt()
+            if opt == 'Y':
+                def get_cpf():
+                    try:
+                        cpf_guy = int(input('CPF: '))
+                        if len(str(cpf_guy)) > 11 or len(str(cpf_guy)) < 11:
+                            print('Only 11 numbers!')
+                            return get_cpf()
+                    except:
+                        print('Only numbers1')
+                        return get_cpf()
+                    else:
+                        return cpf_guy
+                cpf = get_cpf()
+                try:
+                    self.comb.to_fuel(id_comb, (Decimal(self.comb.amount_comb(id_comb)) - Decimal(qt_comb)))
+                    self.nf.generates_nf_with_cpf(str(cpf), amount_price, name_comb, Decimal(qt_comb))
                     self.fidelity.get_points(cpf)
                 except Exception as error_byliter_cpf:
                     print('Error in system')

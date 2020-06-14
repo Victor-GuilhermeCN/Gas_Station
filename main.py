@@ -16,16 +16,16 @@ def menu():
           '[2] - Register customer\n'
           '[3] - Consult promotion points\n'
           '[4] - Consult NF\n'
-          '[5] - Consult costumer information\n'
-          '[9] - Exit')
+          '[5] - Exit')
     line()
     chosen_option()
 
 
 def chosen_option():
+    # Handling data entry Option
     try:
         opt = input('Which option: ')
-        if opt not in '12349':
+        if opt not in '12345':
             print('Only numbers between 1-5!')
             return line(), chosen_option()
     except Exception as error_chosen_option:
@@ -41,6 +41,7 @@ def chosen_option():
                       '[3] - Return Menu')
 
             def liter_or_value():
+                # Handling data entry option!
                 try:
                     line()
                     liter_value = int(input('Wich option: '))
@@ -52,6 +53,7 @@ def chosen_option():
                     return liter_or_value()
                 else:
                     if liter_value == 1:
+                        #  Handling data entry ID Fuel
                         def id_comb():
                             print('[1] - Gasoline \n'
                                   '[2] - Gas\n'
@@ -65,13 +67,15 @@ def chosen_option():
                                 line()
                                 if id_combs not in '123456':
                                     print('Only numbers between 1-6')
-                                    return id_comb
+                                    return id_comb()
                             except:
                                 print('Only numbers!')
                                 return id_comb()
                             else:
                                 if id_combs == '6':
                                     return menu_fuel(), liter_or_value()
+
+                                # Handling data entry liters
                                 def value_liters():
                                     try:
                                         liters = float(input('Liters: '))
@@ -79,9 +83,46 @@ def chosen_option():
                                         print('Only numbers!')
                                         return value_liters()
                                     else:
+                                        # Running the supply
                                         FuelPump().byliter(id_combs, Decimal(liters))
                                 value_liters()
                         id_comb()
+                    if liter_value == 2:
+                        def id_comb():
+                            print('[1] - Gasoline \n'
+                                  '[2] - Gas\n'
+                                  '[3] - Diesel\n'
+                                  '[4] - Alcohol\n'
+                                  '[5] - Gasoline with additives\n'
+                                  '[6] - Return')
+                            line()
+                            try:
+                                id_combs = input('Which fuel: ')
+                                line()
+                                if id_combs not in '123456':
+                                    print('Only numbers between 1-6')
+                                    return id_comb()
+                            except:
+                                print('Only numbers!')
+                                return id_comb()
+                            else:
+                                if id_combs == '6':
+                                    # Returnin to menu
+                                    return menu_fuel(), liter_or_value()
+
+                                def value_fill():
+                                    # Handling data entry Value
+                                    try:
+                                        value = float(input('Value: '))
+                                    except:
+                                        print('Only numbers!')
+                                        return value_fill()
+                                    else:
+                                        # Running the supply
+                                        FuelPump().byvalue(id_combs, value)
+                                value_fill()
+                        id_comb()
+
             menu_fuel()
             liter_or_value()
 
@@ -90,6 +131,7 @@ def chosen_option():
             line()
 
             def getting_data():
+                # Handling data entry CPF
                 def getting_cpf():
                     try:
                         cpf = int(input('CPF: '))
@@ -102,9 +144,10 @@ def chosen_option():
                     else:
                         name = input('Name: ')
 
+                        # Handling data entry phone
                         def getting_phone():
                             try:
-                                phone = int(input('Phone'))
+                                phone = int(input('Phone: '))
                                 if len(str(phone)) > 9 or len(str(phone)) < 9:
                                     print('Only 9 numbers!')
                                     return getting_phone()
@@ -112,7 +155,15 @@ def chosen_option():
                                 print('Only numbers!')
                                 return getting_phone()
                             else:
-                                return Client().client_register(cpf, name, phone), line(), return_menu()
+                                # Checking if the user is already registered
+                                client_insert = Client().client_register(cpf, name, phone)
+                                if client_insert == True:
+                                    pass
+                                elif client_insert == False:
+                                    print("You're already registered!")
+                                line()
+                                return_menu()
+
                         getting_phone()
                 getting_cpf()
             getting_data()
@@ -138,25 +189,28 @@ def chosen_option():
             line()
 
             def get_id_nf():
+                # Handling data entry ID_NF
                 try:
                     id_nf = int(input('ID NF: '))
                 except:
                     print('Only numbers')
                 else:
+                    # Running the consultation in the databank
                     result_consult = Nf().consulting_nf(id_nf)
+                    # Verifying if the consultation it's right
                     if result_consult == True:
                         return line(), return_menu()
                     elif result_consult == False:
                         return line(), get_id_nf()
             get_id_nf()
         elif opt == '5':
-            pass
-        elif opt == '9':
+            # Exiting the application
             while True:
                 print('See you soon!')
                 break
 
 
+# Function that returns to menu
 def return_menu():
     try:
         rt_opt = input('Do you want to return to the main menu? [Y/N]: ').upper().strip()[0]
