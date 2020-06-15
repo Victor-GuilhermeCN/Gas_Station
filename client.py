@@ -27,8 +27,7 @@ class Client:
         except Exception as error_select_name:
             print('Select issues!')
             print(error_select_name)
-        else:
-            return client_name[0]
+        return client_name
 
     def update_phone_client(self, cpf, phone):
         try:
@@ -51,3 +50,26 @@ class Client:
             self.bank.con.commit()
             print('Client deleted successfully!')
             self.bank.con.close()
+
+    def consulting_registration(self, cpf):
+        try:
+            self.bank.cursor.execute('SELECT * FROM client where cpf = %s', (str(cpf,)))
+        except:
+            return False
+        else:
+            return True
+
+    def consulting_cpf(self, cpf):
+        cpf_id = []
+        try:
+            self.bank.cursor.execute('SELECT cpf from client where cpf = %s', (str(cpf,)))
+            for i in self.bank.cursor.fetchall():
+                cpf_id.append(i[0])
+        except:
+            print('Sp1')
+        else:
+            if len(cpf_id) == 0:
+                print("You're not registered!")
+                return False
+            else:
+                return cpf_id[0]

@@ -28,8 +28,17 @@ class Fidelity:
     def consulting_points(self, cpf):
         amount_points = []
         client_name = self.client.select_client_name(cpf)
-        self.bank.cursor.execute('SELECT points_fidelity from client where cpf = %s', (cpf,))
-        for i in self.bank.cursor.fetchall():
-            amount_points.append(i[0])
-        print(f'Hi {client_name},\n'
-              f'Your points in our loyalty program are: {amount_points[0]:.0f}')
+        if len(client_name) == 0:
+            print("You're not registered!")
+        else:
+            try:
+                self.bank.cursor.execute('SELECT points_fidelity from client where cpf = %s', (cpf,))
+                for i in self.bank.cursor.fetchall():
+                    amount_points.append(i[0])
+            except Exception:
+                print("You still don't have points!")
+            else:
+                if len(amount_points) == 1:
+                    amount_points = '0'
+                print(f'Hi {client_name[0]},')
+                print(f'Your points in our loyalty program are: {amount_points[0]}')
