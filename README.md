@@ -17,6 +17,8 @@ Version 0.4 - EN - Adding the new NF consultation method and creating the user c
 
 Version 1.0 - EN - Connection problems and application of data treatments (Try / Except), and code comments for better understanding have been fixed!
 
+Version 1.1 - EN - Refactoring the code and adding some new functions on Function/__init__.py to test data entry, and excluding unecessary.
+
 ----------------------------------------------------------------------------------------------------------------------------------------
 Sistema de posto de gasolina
 
@@ -35,3 +37,5 @@ Versão 0.3 - PT-BR - Adicionando a classe fidelidade e ligando-a com a tabela c
 Versão 0.4 - PT-BR - Adicionando o metodo novo de consulta de NF e criando a interface de comunicação do usuário pelo terminal!
 
 Versão 1.0 - PT-BR - Foram corrigidos os problemas de conexão e a aplicação de tratamentos de dados (Try/Except), e os comentários dos código pra melhor entendimento!
+
+Versão 1.1 - PT-BR - Refatorando o código e adicionando algumas novas funções na Função / __ init__.py para testar a entrada de dados e excluindo código desnecessário.
